@@ -1,0 +1,22 @@
+{
+  "build": {
+    "GOOGLE_TTS": "../moddable-google-tts",
+  },
+  "include": [
+    "$(GOOGLE_TTS)/manifest_google_tts.json",
+		"$(MODDABLE)/modules/network/mdns/manifest.json",
+  ],
+  "creation": {
+    "static": 98304,
+  },
+  "preload": [
+    "google-tts",
+    "castv2",
+  ],
+  "modules": {
+    "*": [
+      "./google-home-notifier",
+      "./castv2/castv2"
+    ]
+  }
+}

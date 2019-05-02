@@ -1,0 +1,17 @@
+{
+  "build": {
+    "GOOGLE_HOME_NOTIFIER": "../../moddable-google-home-notifier",
+  },
+  "include": [
+    "$(GOOGLE_HOME_NOTIFIER)/manifest_google_home_notifier.json",
+  ],
+  "preload": [
+    "google-tts",
+  ],
+  "modules": {
+    "*": [
+      "./main"
+    ]
+  }
+}
+
