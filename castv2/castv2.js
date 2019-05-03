@@ -60,16 +60,17 @@ class CastV2 @ "xs_castv2_destructor" {
                 clientId = `client-${Date.now()}`;
                 status = 5;
                 socket.write(this._serialize(clientId, transportId, CASTV2_NS_CONNECTION, CASTV2_DATA_CONNECT));
-                status = 6;
                 socket.write(this._serialize(clientId, transportId, CASTV2_NS_MEDIA, CASTV2_DATA_LOAD));
+              } else if (status === 5) {
+                if (returnValue.data.indexOf('"type":"MEDIA_STATUS"') < 0 || returnValue.data.indexOf('"playerState":"IDLE"') < 0 || returnValue.data.indexOf('"idleReason":"FINISHED"') < 0) return;
+                status = 6;
+                socket.close();
+                res();
               }
             } else if (message === 3 ) {
               if (status === 2) {
                 status = 3;
                 socket.write(this._serialize('sender-0', 'receiver-0', CASTV2_NS_HEARTBEAT, CASTV2_DATA_PING));
-              } else if (status === 6) {
-                socket.close();
-                res();
               }
             } else if (message < 0 && status !== 6) {
               rej({message, status});
